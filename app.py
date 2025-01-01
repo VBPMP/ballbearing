@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
+import joblib
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
 # Load your CSV file
-df = pd.read_csv(r"E:\Ball_Bearing\Vasant_Project.csv")
+df = pd.read_csv(r"Vasant_Project.csv")
 
 # Define target and selected columns
 target_column = ['Bearing_No', 'MAX_Stress', 'MAX_Deformation']
@@ -22,9 +22,8 @@ y = df_selected[target_column]
 scaler = MinMaxScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Train RandomForestRegressor
-rf_model = RandomForestRegressor(n_estimators=10, random_state=42)
-rf_model.fit(X_scaled, y)
+# Load the saved model
+rf_model = joblib.load('ball_bearing_rf_model.pkl')
 
 # Streamlit GUI
 st.title("Ball Bearing Selection Tool")
