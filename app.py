@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import joblib
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
@@ -22,8 +22,9 @@ y = df_selected[target_column]
 scaler = MinMaxScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Load the saved model
-rf_model = joblib.load('ball_bearing_rf_model.pkl')
+# Train RandomForestRegressor
+rf_model = RandomForestRegressor(n_estimators=10, random_state=42)
+rf_model.fit(X_scaled, y)
 
 # Streamlit GUI
 st.title("Ball Bearing Selection Tool")
